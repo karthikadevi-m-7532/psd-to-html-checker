@@ -1,0 +1,15 @@
+{
+  "name": "psd-to-html-checker",
+  "version": "1.0.0",
+  "description": "A web-based design QA tool that compares PSD design files against live HTML implementations",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ag-psd": "^18.0.0",
+    "express": "^4.18.2",
+    "multer": "^2.0.0",
+    "puppeteer": "^24.15.0"
+  }
+}
