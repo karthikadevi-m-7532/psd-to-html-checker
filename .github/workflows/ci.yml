@@ -20,12 +20,20 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: Install Puppeteer system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 \
+            libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 \
+            libxfixes3 libxrandr2 libgbm1 libasound2t64
+
       - name: Install dependencies
         run: npm install
 
-      - name: Start server (smoke test)
+      - name: Start server and smoke test
         run: |
-          node server.js &
-          sleep 5
-          curl -f http://localhost:3000 || exit 1
+          PORT=3000 node server.js &
+          sleep 6
+          curl -f http://localhost:3000/api/health
           kill %1
