@@ -1,0 +1,58 @@
+🚀 Introducing DesignSync Comparator — AI-Powered Design QA Tool
+
+Hi Team! 👋
+
+I'm excited to share a design quality assurance tool I built with the help of AI (Claude) to automate our UI review process.
+
+🤖 Built with AI Assistance
+
+This tool was developed in collaboration with Claude AI, leveraging AI-powered code generation, intelligent architecture decisions, and smart problem-solving to build a production-ready design comparison engine from scratch.
+
+🎯 What Does It Do?
+
+It automatically compares designs against live web pages and generates a detailed mismatch report — replacing hours of manual visual review with a single click.
+
+⚡ Two Powerful Comparison Modes
+
+1. PSD vs HTML
+   - Upload a Photoshop design → Enter a live page URL → Get instant comparison
+
+2. HTML vs HTML (Prezoho vs Live)
+   - Enter a reference URL and a live URL → Spot every difference instantly
+
+🔍 What It Checks
+
+- 🔤 Typography       — font-family, font-size, font-weight
+- 📏 Line Height      — line-height differences
+- 🔡 Letter Spacing   — letter-spacing deviations
+- 🎨 Colors           — text color, background color
+- ↔️ Alignment        — text-align, layout alignment
+- 📐 Spacing          — section gaps, element spacing, padding
+
+📊 Smart Report Output
+
+- Design Fidelity Score (0–100) — see how closely the page matches the design
+- Severity Classification — Critical / High / Medium / Low
+- CSS Selectors — exact element selectors for quick debugging
+- Screenshot Highlights — visual "More Details" popup showing the exact issue area
+- Spacing Context — shows which elements have incorrect gaps
+
+🛠️ Tech Stack
+
+- Backend: Node.js + Express
+- PSD Parsing: ag-psd
+- HTML Analysis: Puppeteer (headless Chrome)
+- AI Assistant: Claude (Anthropic) — for development, architecture & problem-solving
+- Frontend: Vanilla HTML/CSS/JS with dark theme UI
+
+
+👥 Who Is This For?
+
+- Designers — Verify if builds match approved designs
+- Developers — Identify exactly which CSS properties need fixing
+- QA Team — Automate visual regression checks before release
+
+
+🔗 Try It Now
+
+- Public URL: https://fernless-sherron-embracive.ngrok-free.dev

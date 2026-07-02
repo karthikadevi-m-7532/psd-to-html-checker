@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Comparator</title>
+  <link rel="stylesheet" href="public/css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-icon">⚖️</span>
+          <h1>Design <span class="accent">Comparator</span></h1>
+        </div>
+        <p class="tagline">Design QA Tool — Compare PSD designs or HTML pages side by side</p>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+
+      <!-- Mode Tabs -->
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="psd-html">
+          <span class="mode-tab-icon">📄</span> PSD vs HTML
+        </button>
+        <button class="mode-tab" data-mode="html-html">
+          <span class="mode-tab-icon">🌐</span> Prezoho/Local vs Live
+        </button>
+      </div>
+
+      <!-- PSD vs HTML Upload Section -->
+      <section class="upload-section" id="psd-html-section">
+        <div class="upload-grid">
+          <!-- PSD Upload -->
+          <div class="upload-card" id="psd-upload-card">
+            <div class="card-header">
+              <span class="card-icon">📄</span>
+              <h2>PSD Design File</h2>
+            </div>
+            <div class="dropzone" id="dropzone">
+              <input type="file" id="psd-file" accept=".psd" hidden />
+              <div class="dropzone-content">
+                <div class="dropzone-icon">📁</div>
+                <p class="dropzone-text">Drag & drop your PSD file here</p>
+                <p class="dropzone-subtext">or <button class="browse-btn" id="browse-btn">browse files</button></p>
+                <p class="dropzone-limit">Maximum file size: 1GB</p>
+              </div>
+              <div class="file-info hidden" id="file-info">
+                <span class="file-icon">✅</span>
+                <div>
+                  <p class="file-name" id="file-name"></p>
+                  <p class="file-size" id="file-size"></p>
+                </div>
+                <button class="remove-btn" id="remove-btn" title="Remove file">✕</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- URL Input -->
+          <div class="upload-card" id="url-card">
+            <div class="card-header">
+              <span class="card-icon">🌐</span>
+              <h2>HTML Page URL</h2>
+            </div>
+            <div class="url-input-wrapper">
+              <input
+                type="url"
+                id="url-input"
+                placeholder="https://example.com"
+                class="url-input"
+              />
+              <div class="viewport-settings">
+                <label>
+                  Viewport Width:
+                  <input type="number" id="viewport-width" value="1440" min="320" max="3840" class="viewport-input" />
+                  <span class="input-suffix">px</span>
+                </label>
+                <label>
+                  Viewport Height:
+                  <input type="number" id="viewport-height" value="900" min="320" max="2160" class="viewport-input" />
+                  <span class="input-suffix">px</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compare Button -->
+        <div class="action-bar">
+          <button class="compare-btn" id="compare-btn" disabled>
+            <span class="btn-icon">🔍</span>
+            Compare Design vs Implementation
+          </button>
+        </div>
+      </section>
+
+      <!-- HTML vs HTML Section -->
+      <section class="upload-section hidden" id="html-html-section">
+        <div class="upload-grid">
+          <!-- Reference URL (Prezoho) -->
+          <div class="upload-card" id="ref-url-card">
+            <div class="card-header">
+              <span class="card-icon">🔗</span>
+              <h2>Reference URL (Prezoho)</h2>
+            </div>
+            <div class="url-input-wrapper">
+              <input
+                type="url"
+                id="ref-url-input"
+                placeholder="https://prezohoweb.zoho.com/..."
+                class="url-input"
+              />
+            </div>
+          </div>
+
+          <!-- Live URL -->
+          <div class="upload-card" id="live-url-card">
+            <div class="card-header">
+              <span class="card-icon">🌐</span>
+              <h2>Live URL</h2>
+            </div>
+            <div class="url-input-wrapper">
+              <input
+                type="url"
+                id="live-url-input"
+                placeholder="https://www.zoho.com/..."
+                class="url-input"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Shared Viewport Settings -->
+        <div class="viewport-settings-bar">
+          <label>
+            Viewport Width:
+            <input type="number" id="hh-viewport-width" value="1440" min="320" max="3840" class="viewport-input" />
+            <span class="input-suffix">px</span>
+          </label>
+          <label>
+            Viewport Height:
+            <input type="number" id="hh-viewport-height" value="900" min="320" max="2160" class="viewport-input" />
+            <span class="input-suffix">px</span>
+          </label>
+        </div>
+
+        <!-- Compare Button -->
+        <div class="action-bar">
+          <button class="compare-btn" id="compare-html-btn" disabled>
+            <span class="btn-icon">🔍</span>
+            Compare Reference vs Live
+          </button>
+        </div>
+      </section>
+
+      <!-- Loading State -->
+      <section class="loading-section hidden" id="loading-section">
+        <div class="loader">
+          <div class="spinner"></div>
+          <h3 id="loading-title">Analyzing...</h3>
+          <p id="loading-status">Parsing PSD file...</p>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Error State -->
+      <div class="error-banner hidden" id="error-banner">
+        <span class="error-icon">⚠️</span>
+        <p id="error-message"></p>
+        <button class="error-close" id="error-close">✕</button>
+      </div>
+
+      <!-- Results Section -->
+      <section class="results-section hidden" id="results-section">
+        <!-- Score Card -->
+        <div class="score-card" id="score-card">
+          <div class="score-circle">
+            <svg viewBox="0 0 120 120">
+              <circle class="score-bg" cx="60" cy="60" r="54" />
+              <circle class="score-fill" cx="60" cy="60" r="54" id="score-ring" />
+            </svg>
+            <span class="score-value" id="score-value">0</span>
+          </div>
+          <div class="score-details">
+            <h2>Design Fidelity Score</h2>
+            <p id="score-summary"></p>
+            <div class="score-stats">
+              <div class="stat critical" id="stat-critical"><span class="stat-count">0</span> Critical</div>
+              <div class="stat high" id="stat-high"><span class="stat-count">0</span> High</div>
+              <div class="stat medium" id="stat-medium"><span class="stat-count">0</span> Medium</div>
+              <div class="stat low" id="stat-low"><span class="stat-count">0</span> Low</div>
+            </div>
+            <div class="score-meta" id="score-meta"></div>
+          </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+          <button class="tab active" data-tab="all">
+            All Issues <span class="tab-count" id="tab-count-all">0</span>
+          </button>
+          <button class="tab" data-tab="fonts">
+            Fonts <span class="tab-count" id="tab-count-fonts">0</span>
+          </button>
+          <button class="tab" data-tab="colors">
+            Colors <span class="tab-count" id="tab-count-colors">0</span>
+          </button>
+          <button class="tab" data-tab="text-align">
+            Text Alignment <span class="tab-count" id="tab-count-text-align">0</span>
+          </button>
+          <button class="tab" data-tab="line-height">
+            Line Height <span class="tab-count" id="tab-count-line-height">0</span>
+          </button>
+          <button class="tab" data-tab="letter-spacing">
+            Letter Spacing <span class="tab-count" id="tab-count-letter-spacing">0</span>
+          </button>
+          <button class="tab" data-tab="spacing">
+            Spacing <span class="tab-count" id="tab-count-spacing">0</span>
+          </button>
+          <button class="tab" data-tab="matches">
+            ✓ Matches <span class="tab-count" id="tab-count-matches">0</span>
+          </button>
+        </div>
+
+        <!-- Issues List -->
+        <div class="issues-container" id="issues-container">
+          <!-- Populated by JS -->
+        </div>
+
+      </section>
+    </main>
+
+    <!-- Issue Detail Modal -->
+    <div class="modal-overlay" id="detail-modal">
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <div class="modal-header">
+          <span class="modal-badge" id="modal-badge"></span>
+          <span class="modal-type" id="modal-type"></span>
+          <span class="modal-element" id="modal-element"></span>
+        </div>
+        <div class="modal-screenshot-area">
+          <canvas id="modal-canvas"></canvas>
+        </div>
+        <div class="modal-details" id="modal-details">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Design Comparator — Design QA Tool</p>
+    </footer>
+  </div>
+
+  <script src="public/js/app.js"></script>
+</body>
+</html>
